@@ -1,0 +1,7 @@
+#+TITLE: Arnoo's .dotfiles
+#+AUTHOR: arnoo-sel
+#+STARTUP: showeverything
+#+OPTIONS: toc:2
+
+Collection of configuration files.
+
