@@ -7,6 +7,7 @@
 - [[#system-setup][SYSTEM SETUP]]
   - [[#org-babel-languages][Org-Babel Languages]]
   - [[#required-system-packages][Required System Packages]]
+  - [[#additional-setup][Additional Setup]]
   - [[#emacs-configuration-setup][Emacs Configuration Setup]]
 - [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
   - [[#straightel-package-manager][Straight.el Package Manager]]
@@ -51,12 +52,13 @@
 
 * SYSTEM SETUP
 
+To run only once.
+
 ** Org-Babel Languages
 
-Allow ~org-babel~ to execute shell scripts.
-Needed to execute the shell scripts on the code blocks below.
+Execute the following code block ("~C-c C-c~") to allow ~org-babel~ to execute shell scripts.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no :results output silent
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell . t)))
@@ -68,14 +70,20 @@ Execute ("~C-c C-c~") the following code blocks once at system setup.
 
 *** OpenSUSE-Tumbleweed
 
-#+begin_src bash :tangle no :eval no-export :results output silent
+#+begin_src bash :tangle no :eval no-export :results output silent :dir /sudo::~
   # required for cmake lsp-mode support
   sudo zypper install -y python311-pipx
   pipx cmake-language-server
 
   # fonts
-  sudo zypper install inter-fonts inter-variable-fonts
-  sudo zupper install adobe-sourcecodepro-fonts
+  sudo zypper install -y inter-fonts inter-variable-fonts
+  sudo zypper install -y adobe-sourcecodepro-fonts
+
+  # required for vterm
+  sudo zypper install -y libtool
+
+  # required for powerline
+  sudo zypper install -y powerline-fonts
 #+end_src
 
 WSL extras:
@@ -96,13 +104,21 @@ WSL extras:
   # todo: sourcecodepro install
 #+end_src
 
+** Additional Setup
+
+#+begin_src emacs-lisp :tangle no :eval no-export :results output silent
+  (all-the-icons-install-fonts)
+#+end_src
+
 ** Emacs Configuration Setup
 
 Execute ("~C-c C-c~") the following code block once at system setup.
 
 #+begin_src bash :tangle no :eval no-export :results output silent :var filename=(buffer-file-name)
+  rm -f ~/.emacs
+
   # Create emacs configuration folder
-  mkdir ~/.emacs.d
+  mkdir -p ~/.emacs.d
 
   # Prevent loading of the default package manager
   echo '(setq package-enable-at-startup nil)' > mkdir ~/.emacs.d/early-init.el
