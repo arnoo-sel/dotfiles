@@ -88,19 +88,22 @@ Execute ("~C-c C-c~") the following code blocks once at system setup.
 
 WSL extras:
 
-#+begin_src bash :tangle no :eval no-export :results output silent
+#+begin_src bash :tangle no :eval no-export :results output silent :dir /sudo::~
   sudo zypper install -t pattern wsl_gui
 #+end_src
 
 *** Ubuntu 22.04
 
-#+begin_src bash :tangle no :eval no-export :results output silent
+#+begin_src bash :tangle no :eval no-export :results output silent :dir /sudo::~
   # required for cmake lsp-mode support
-  sudo apt install pipx
+  sudo apt install -y pipx
   pipx cmake-language-server
 
+  # required for vterm
+  sudo apt install -y libtool-bin
+
   # fonts
-  sudo apt install fonts-inter fonts-inter-variable
+  sudo apt install -y fonts-inter fonts-inter-variable
   # todo: sourcecodepro install
 #+end_src
 
